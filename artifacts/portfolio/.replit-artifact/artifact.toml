@@ -1,6 +1,6 @@
 kind = "web"
 previewPath = "/"
-title = "Ogwel Stephen — Portfolio"
+title = "ogwel.devfolio"
 version = "1.0.0"
 id = "artifacts/portfolio"
 router = "path"

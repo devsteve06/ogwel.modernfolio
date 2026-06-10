@@ -4,21 +4,18 @@ _Replace the heading above with the project's name, and this line with one sente
 
 ## Run & Operate
 
-- `pnpm --filter @workspace/api-server run dev` — run the API server (port 5000)
+- `pnpm --filter @workspace/portfolio run dev` — run the portfolio dev server
+- `pnpm --filter @workspace/portfolio run build` — build the static site (output: `artifacts/portfolio/dist/public`)
+- `pnpm --filter @workspace/portfolio run serve` — preview the production build
 - `pnpm run typecheck` — full typecheck across all packages
 - `pnpm run build` — typecheck + build all packages
-- `pnpm --filter @workspace/api-spec run codegen` — regenerate API hooks and Zod schemas from the OpenAPI spec
-- `pnpm --filter @workspace/db run push` — push DB schema changes (dev only)
-- Required env: `DATABASE_URL` — Postgres connection string
 
 ## Stack
 
 - pnpm workspaces, Node.js 24, TypeScript 5.9
-- API: Express 5
-- DB: PostgreSQL + Drizzle ORM
-- Validation: Zod (`zod/v4`), `drizzle-zod`
-- API codegen: Orval (from OpenAPI spec)
-- Build: esbuild (CJS bundle)
+- Frontend: React 19 + Vite 7, Wouter (routing), Tailwind CSS 4
+- UI: shadcn/ui (Radix primitives), Framer Motion, lucide-react / react-icons
+- Validation: Zod
 
 ## Where things live
 

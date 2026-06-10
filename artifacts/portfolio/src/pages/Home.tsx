@@ -1,6 +1,6 @@
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { Github, Linkedin, Mail, ArrowRight, ExternalLink } from "lucide-react";
-import { SiReact, SiPostgresql, SiExpress, SiNodedotjs, SiTypescript, SiJavascript, SiGit, SiHtml5, SiCss3 } from "react-icons/si";
+import { SiReact, SiPostgresql, SiExpress, SiNodedotjs, SiTypescript, SiJavascript, SiGit, SiHtml5 } from "react-icons/si";
 
 const Nav = () => {
   return (
@@ -97,7 +97,7 @@ const Skills = () => {
     { name: "Git", icon: SiGit, color: "#F05032" },
   ];
 
-  const container = {
+  const container: Variants = {
     hidden: { opacity: 0 },
     show: {
       opacity: 1,
@@ -105,7 +105,7 @@ const Skills = () => {
     }
   };
 
-  const item = {
+  const item: Variants = {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.16, 1, 0.3, 1] } }
   };
