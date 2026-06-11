@@ -4,25 +4,28 @@ A modern, animated developer portfolio built as a static single-page app.
 
 ## Run & Operate
 
-The site lives in the `artifacts/portfolio` workspace package. Common commands:
+The quickest way to run the whole project is the root run script, which installs
+dependencies (if needed) and starts the dev server at http://localhost:5173:
 
-- `pnpm --filter @workspace/portfolio run dev` — run the portfolio dev server
-- `pnpm --filter @workspace/portfolio run build` — build the static site (output: `artifacts/portfolio/dist/public`)
-- `pnpm --filter @workspace/portfolio run serve` — preview the production build
-- `pnpm run typecheck` — full typecheck across all packages
-- `pnpm run build` — typecheck + build all packages
+```powershell
+./run.ps1            # Windows (PowerShell)
+```
 
-> The Vite config requires `PORT` and `BASE_PATH` environment variables — it will throw if they are not set. For local development:
->
-> ```bash
-> PORT=5173 BASE_PATH=/ pnpm --filter @workspace/portfolio run dev
-> ```
->
-> On Windows, set these from PowerShell (Git Bash rewrites `BASE_PATH=/` into a filesystem path):
->
-> ```powershell
-> $env:PORT='5173'; $env:BASE_PATH='/'; pnpm --filter @workspace/portfolio run dev
-> ```
+```bash
+./run.sh             # macOS / Linux
+```
+
+Pass a task to the script to run something else, e.g. `./run.ps1 build` or `./run.ps1 preview`.
+
+You can also use the root pnpm scripts directly:
+
+- `pnpm dev` — run the portfolio dev server (http://localhost:5173)
+- `pnpm preview` — preview the production build
+- `pnpm run build` — typecheck + build the static site (output: `artifacts/portfolio/dist/public`)
+- `pnpm run typecheck` — typecheck across all packages
+
+`PORT` and `BASE_PATH` are optional environment variables (defaulting to `5173` and `/`)
+that override the dev server port and the app's base path.
 
 ## Stack
 
@@ -37,8 +40,9 @@ The site lives in the `artifacts/portfolio` workspace package. Common commands:
   - `src/pages/Home.tsx` — main page (hero, skills, projects)
   - `src/components/ui/` — shadcn/ui components
   - `src/index.css` — Tailwind theme and global styles
-  - `vite.config.ts` — build/dev config (requires `PORT` and `BASE_PATH`)
-- `pnpm-workspace.yaml` — workspace packages, dependency catalog, and platform overrides
+  - `vite.config.ts` — build/dev config
+- `pnpm-workspace.yaml` — workspace packages and dependency catalog
+- `run.ps1` / `run.sh` — one-command project runner
 
 ## Requirements
 
