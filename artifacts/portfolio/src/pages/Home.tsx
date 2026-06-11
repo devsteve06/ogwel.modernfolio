@@ -258,7 +258,7 @@ const Contact = () => {
         </p>
         
         <a 
-          href="mailto:hello@example.com" 
+          href="mailto:eusteve906@gmail.com" 
           className="inline-flex items-center gap-2 px-8 py-4 bg-foreground text-background font-medium rounded-md hover:bg-accent hover:text-accent-foreground transition-all duration-300 mb-16"
         >
           <Mail className="w-5 h-5" /> Say Hello
