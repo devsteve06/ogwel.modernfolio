@@ -1,10 +1,38 @@
+import { useState } from "react";
 import { motion, type Variants } from "framer-motion";
-import { Github, Linkedin, Mail, ArrowRight, ExternalLink } from "lucide-react";
+import { Github, Linkedin, Mail, ArrowRight, ExternalLink, Sun, Moon } from "lucide-react";
 import { SiReact, SiPostgresql, SiExpress, SiNodedotjs, SiTypescript, SiJavascript, SiGit, SiHtml5 } from "react-icons/si";
+
+const GITHUB_URL = "https://github.com/devsteve06";
+const LINKEDIN_URL = "https://www.linkedin.com/in/stephen-ogwel-54728027b";
+
+const ThemeToggle = () => {
+  // The pre-paint script in index.html has already set the class; mirror it here.
+  const [isDark, setIsDark] = useState(
+    () => document.documentElement.classList.contains("dark"),
+  );
+
+  const toggle = () => {
+    const next = !isDark;
+    setIsDark(next);
+    document.documentElement.classList.toggle("dark", next);
+    localStorage.setItem("theme", next ? "dark" : "light");
+  };
+
+  return (
+    <button
+      onClick={toggle}
+      aria-label={isDark ? "Switch to light theme" : "Switch to dark theme"}
+      className="p-2 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-colors"
+    >
+      {isDark ? <Sun className="w-4 h-4" /> : <Moon className="w-4 h-4" />}
+    </button>
+  );
+};
 
 const Nav = () => {
   return (
-    <motion.nav 
+    <motion.nav
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
@@ -13,11 +41,12 @@ const Nav = () => {
       <div className="font-mono text-sm font-semibold tracking-tighter">
         <a href="#hero" className="hover:text-accent transition-colors">OS.</a>
       </div>
-      <div className="flex gap-6 text-sm font-medium">
-        <a href="#about" className="text-muted-foreground hover:text-foreground transition-colors">About</a>
-        <a href="#skills" className="text-muted-foreground hover:text-foreground transition-colors">Skills</a>
-        <a href="#projects" className="text-muted-foreground hover:text-foreground transition-colors">Projects</a>
-        <a href="#contact" className="text-muted-foreground hover:text-foreground transition-colors">Contact</a>
+      <div className="flex items-center gap-6 text-sm font-medium">
+        <a href="#about" className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">About</a>
+        <a href="#skills" className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Skills</a>
+        <a href="#projects" className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Projects</a>
+        <a href="#contact" className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Contact</a>
+        <ThemeToggle />
       </div>
     </motion.nav>
   );
@@ -236,10 +265,10 @@ const Contact = () => {
         </a>
         
         <div className="flex items-center justify-center gap-8">
-          <a href="#" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="GitHub">
+          <a href={GITHUB_URL} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="GitHub">
             <Github className="w-6 h-6" />
           </a>
-          <a href="#" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="LinkedIn">
+          <a href={LINKEDIN_URL} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors" aria-label="LinkedIn">
             <Linkedin className="w-6 h-6" />
           </a>
         </div>

@@ -3,6 +3,18 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+    <script>
+      // Apply the saved (or system) theme before paint to avoid a flash of the wrong theme.
+      (function () {
+        try {
+          var stored = localStorage.getItem("theme");
+          var isDark = stored
+            ? stored === "dark"
+            : window.matchMedia("(prefers-color-scheme: dark)").matches;
+          if (isDark) document.documentElement.classList.add("dark");
+        } catch (e) {}
+      })();
+    </script>
     <title>Ogwel Stephen — Portfolio</title>
     <meta name="description" content="Ogwel Stephen — Portfolio — built on Replit. Update this description to reflect the app." />
     <meta name="robots" content="index, follow" />
