@@ -132,7 +132,6 @@ export function Footer() {
                     className="inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-foreground"
                   >
                     <Icon className="h-4 w-4" aria-hidden="true" />
-                    <span>{label}</span>
                     <span className="font-mono text-[11px]">{handle}</span>
                   </a>
                 </li>

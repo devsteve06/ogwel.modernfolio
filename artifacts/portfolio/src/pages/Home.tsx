@@ -536,7 +536,6 @@ const Contact = () => {
                 className="inline-flex items-center gap-2 rounded-full border border-border px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:border-accent hover:text-foreground"
               >
                 <Icon className="h-4 w-4 text-accent" aria-hidden="true" />
-                <span className="text-xs font-medium">{label}</span>
                 <span className="font-mono text-xs">{handle}</span>
               </a>
             </li>
