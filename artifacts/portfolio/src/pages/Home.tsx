@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion, type Variants } from "framer-motion";
 import { Github, Linkedin, Mail, ArrowRight, ExternalLink, Sun, Moon, GraduationCap, MapPin, Briefcase } from "lucide-react";
 import { SiReact, SiPostgresql, SiExpress, SiNodedotjs, SiTypescript, SiJavascript, SiGit, SiHtml5 } from "react-icons/si";
@@ -7,6 +7,7 @@ import { Footer } from "@/components/Footer";
 import { Portrait } from "@/components/Portrait";
 import { ProjectPhoto } from "@/components/ProjectPhoto";
 import { socialHandles } from "@/lib/socials";
+import { useSectionNav } from "@/lib/useSectionNav";
 
 const GITHUB_URL = "https://github.com/devsteve06";
 const LINKEDIN_URL = "https://www.linkedin.com/in/stephen-ogwel-54728027b";
@@ -36,6 +37,8 @@ const ThemeToggle = () => {
 };
 
 const Nav = () => {
+  const sectionNav = useSectionNav();
+
   return (
     <motion.nav
       initial={{ y: -20, opacity: 0 }}
@@ -44,15 +47,15 @@ const Nav = () => {
       className="fixed top-0 left-0 right-0 z-50 py-6 px-8 flex justify-between items-center backdrop-blur-md bg-background/80 border-b border-border/40"
     >
       <div className="font-mono text-sm font-semibold tracking-tighter">
-        <a href="#hero" className="hover:text-accent transition-colors">OS.</a>
+        <a href="#hero" onClick={sectionNav("hero")} className="hover:text-accent transition-colors">OS.</a>
       </div>
       <div className="flex items-center gap-6 text-sm font-medium">
-        <a href="#about" className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">About</a>
-        <a href="#education" className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Education</a>
-        <a href="#experience" className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Experience</a>
-        <a href="#skills" className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Skills</a>
-        <a href="#projects" className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Projects</a>
-        <a href="#contact" className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Contact</a>
+        <a href="#about" onClick={sectionNav("about")} className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">About</a>
+        <a href="#education" onClick={sectionNav("education")} className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Education</a>
+        <a href="#experience" onClick={sectionNav("experience")} className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Experience</a>
+        <a href="#skills" onClick={sectionNav("skills")} className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Skills</a>
+        <a href="#projects" onClick={sectionNav("projects")} className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Projects</a>
+        <a href="#contact" onClick={sectionNav("contact")} className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Contact</a>
         <ThemeToggle />
       </div>
     </motion.nav>
@@ -60,6 +63,8 @@ const Nav = () => {
 };
 
 const Hero = () => {
+  const sectionNav = useSectionNav();
+
   return (
     <section id="hero" className="min-h-screen flex flex-col justify-center px-8 md:px-24 pt-32 pb-16 relative">
       <div className="mx-auto grid w-full max-w-6xl items-center gap-16 lg:grid-cols-[1.2fr_0.8fr]">
@@ -80,10 +85,10 @@ const Hero = () => {
             I'm a software engineer specializing in building (and occasionally designing) exceptional digital experiences. Currently focused on building accessible, human-centered products using modern web technologies.
           </p>
           <div className="flex flex-wrap gap-4">
-            <a href="#projects" className="inline-flex items-center gap-2 px-6 py-3 bg-foreground text-background font-medium rounded-md hover:bg-accent hover:text-accent-foreground transition-all duration-300">
+            <a href="#projects" onClick={sectionNav("projects")} className="inline-flex items-center gap-2 px-6 py-3 bg-foreground text-background font-medium rounded-md hover:bg-accent hover:text-accent-foreground transition-all duration-300">
               View My Work <ArrowRight className="w-4 h-4" />
             </a>
-            <a href="#contact" className="inline-flex items-center gap-2 px-6 py-3 border border-foreground/50 text-foreground font-medium rounded-md hover:border-foreground transition-all duration-300">
+            <a href="#contact" onClick={sectionNav("contact")} className="inline-flex items-center gap-2 px-6 py-3 border border-foreground/50 text-foreground font-medium rounded-md hover:border-foreground transition-all duration-300">
               Get In Touch
             </a>
           </div>
@@ -668,6 +673,21 @@ const Contact = () => {
 };
 
 export default function Home() {
+  // Older links use `/#section` — scroll there and drop the hash from the URL.
+  useEffect(() => {
+    if (!window.location.hash) return;
+    const id = window.location.hash.replace(/^#/, "");
+    window.history.replaceState(
+      null,
+      "",
+      `${window.location.pathname}${window.location.search}`,
+    );
+    if (!id) return;
+    requestAnimationFrame(() => {
+      document.getElementById(id)?.scrollIntoView({ block: "start" });
+    });
+  }, []);
+
   return (
     <div className="bg-background text-foreground selection:bg-accent selection:text-accent-foreground">
       <Nav />

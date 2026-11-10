@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { ArrowUp, ArrowUpRight, Download, FileText, Github, Linkedin, Mail } from "lucide-react";
 import { socialHandles } from "@/lib/socials";
+import { useSectionNav } from "@/lib/useSectionNav";
 
 const GITHUB_URL = "https://github.com/devsteve06";
 const LINKEDIN_URL = "https://www.linkedin.com/in/stephen-ogwel-54728027b";
@@ -8,12 +9,12 @@ const EMAIL = "eusteve906@gmail.com";
 const CV_DOWNLOAD_URL = `${import.meta.env.BASE_URL}Ogwel-Stephen-CV.pdf`;
 
 const exploreLinks = [
-  { label: "About", href: "/#about" },
-  { label: "Education", href: "/#education" },
-  { label: "Experience", href: "/#experience" },
-  { label: "Skills", href: "/#skills" },
-  { label: "Projects", href: "/#projects" },
-  { label: "Contact", href: "/#contact" },
+  { label: "About", id: "about" },
+  { label: "Education", id: "education" },
+  { label: "Experience", id: "experience" },
+  { label: "Skills", id: "skills" },
+  { label: "Projects", id: "projects" },
+  { label: "Contact", id: "contact" },
 ];
 
 const connectLinks = [
@@ -23,6 +24,8 @@ const connectLinks = [
 ];
 
 export function Footer() {
+  const sectionNav = useSectionNav();
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -74,7 +77,8 @@ export function Footer() {
               {exploreLinks.map((link) => (
                 <li key={link.label}>
                   <a
-                    href={link.href}
+                    href={`#${link.id}`}
+                    onClick={sectionNav(link.id)}
                     className="text-sm text-muted-foreground transition-colors hover:text-foreground"
                   >
                     {link.label}
