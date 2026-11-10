@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, type Variants } from "framer-motion";
-import { Github, Linkedin, Mail, ArrowRight, ExternalLink, Sun, Moon, GraduationCap, MapPin, Briefcase } from "lucide-react";
+import { Github, Linkedin, Mail, ArrowRight, ExternalLink, Sun, Moon, GraduationCap, MapPin, Briefcase, Code2, Server, Database, LayoutTemplate, Gauge, Rocket } from "lucide-react";
 import { SiReact, SiPostgresql, SiExpress, SiNodedotjs, SiTypescript, SiJavascript, SiGit, SiHtml5 } from "react-icons/si";
 import { CertificatePreview, useCertificateImage } from "@/components/CertificatePreview";
 import { Footer } from "@/components/Footer";
@@ -49,11 +49,12 @@ const Nav = () => {
       <div className="font-mono text-sm font-semibold tracking-tighter">
         <a href="#hero" onClick={sectionNav("hero")} className="hover:text-accent transition-colors">OS.</a>
       </div>
-      <div className="flex items-center gap-6 text-sm font-medium">
+      <div className="flex items-center gap-4 lg:gap-6 text-sm font-medium">
         <a href="#about" onClick={sectionNav("about")} className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">About</a>
         <a href="#education" onClick={sectionNav("education")} className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Education</a>
         <a href="#experience" onClick={sectionNav("experience")} className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Experience</a>
         <a href="#skills" onClick={sectionNav("skills")} className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Skills</a>
+        <a href="#services" onClick={sectionNav("services")} className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Services</a>
         <a href="#projects" onClick={sectionNav("projects")} className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Projects</a>
         <a href="#contact" onClick={sectionNav("contact")} className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Contact</a>
         <ThemeToggle />
@@ -516,6 +517,124 @@ const PROJECT_STATUS: Record<ProjectStatus, { label: string; dot: string }> = {
   archived: { label: "Archived", dot: "bg-zinc-400" },
 };
 
+const Services = () => {
+  const sectionNav = useSectionNav();
+
+  const services = [
+    {
+      title: "Full-Stack Web Development",
+      description:
+        "Complete web applications, from database schema to polished interface, built with React, Node.js, and PostgreSQL.",
+      icon: Code2,
+      tags: ["React", "Node.js", "PostgreSQL"],
+    },
+    {
+      title: "Backend & API Development",
+      description:
+        "Reliable REST APIs with authentication, validation, and clean error handling, designed to grow with your product.",
+      icon: Server,
+      tags: ["Express", "JWT", "REST"],
+    },
+    {
+      title: "Database Design",
+      description:
+        "Well-structured schemas, efficient queries, and safe migrations that keep your data consistent as the product scales.",
+      icon: Database,
+      tags: ["PostgreSQL", "MongoDB", "Supabase"],
+    },
+    {
+      title: "Frontend Development",
+      description:
+        "Responsive, accessible interfaces in React and Tailwind CSS that feel fast and work across every device.",
+      icon: LayoutTemplate,
+      tags: ["React", "Tailwind CSS", "TypeScript"],
+    },
+    {
+      title: "Performance & Accessibility",
+      description:
+        "Practical audits and fixes for WCAG AA contrast, keyboard navigation, and load times so everyone can use your product.",
+      icon: Gauge,
+      tags: ["WCAG AA", "Core Web Vitals", "SEO"],
+    },
+    {
+      title: "Deployment & Maintenance",
+      description:
+        "Ship with confidence on Render or Vercel, with CI/CD, environment setup, and ongoing fixes after launch.",
+      icon: Rocket,
+      tags: ["Render", "Vercel", "CI/CD"],
+    },
+  ];
+
+  return (
+    <section id="services" className="min-h-[80vh] flex flex-col justify-center px-8 md:px-24 py-24">
+      <div className="max-w-5xl">
+        <div className="flex items-center gap-6 mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Services</h2>
+          <div className="h-px bg-border flex-grow max-w-xs"></div>
+        </div>
+        <p className="mb-12 max-w-2xl text-muted-foreground leading-relaxed">
+          From the first schema to the final deploy — here is how I can help you
+          build and maintain a dependable web product.
+        </p>
+
+        <ul className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          {services.map((service, i) => (
+            <motion.li
+              key={service.title}
+              initial={{ opacity: 0, y: 24 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-80px" }}
+              transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: i * 0.07 }}
+              className="group flex h-full flex-col rounded-lg border border-border bg-card p-6 transition-colors hover:border-accent/60"
+            >
+              <div className="flex items-start justify-between">
+                <span className="flex h-11 w-11 items-center justify-center rounded-md border border-border bg-background text-accent">
+                  <service.icon className="h-5 w-5" aria-hidden="true" />
+                </span>
+                <span className="font-mono text-xs text-muted-foreground">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+              </div>
+
+              <h3 className="mt-5 text-lg font-semibold tracking-tight text-foreground">
+                {service.title}
+              </h3>
+              <p className="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+                {service.description}
+              </p>
+
+              <ul className="mt-5 flex flex-wrap gap-2">
+                {service.tags.map((tag) => (
+                  <li
+                    key={tag}
+                    className="rounded-full border border-border bg-background px-2.5 py-0.5 font-mono text-[11px] text-muted-foreground"
+                  >
+                    {tag}
+                  </li>
+                ))}
+              </ul>
+            </motion.li>
+          ))}
+        </ul>
+
+        <div className="mt-12 flex flex-col items-start gap-4 rounded-lg border border-border bg-card p-6 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm leading-relaxed text-muted-foreground">
+            Have a project in mind? I'm happy to talk it through.
+          </p>
+          <a
+            href="#contact"
+            onClick={sectionNav("contact")}
+            className="inline-flex shrink-0 items-center gap-2 rounded-md bg-foreground px-5 py-3 text-sm font-medium text-background transition-colors hover:bg-accent hover:text-accent-foreground"
+          >
+            Start a conversation
+            <ArrowRight className="h-4 w-4" aria-hidden="true" />
+          </a>
+        </div>
+      </div>
+    </section>
+  );
+};
+
 const ProjectStatusBadge = ({ status }: { status: ProjectStatus }) => {
   const meta = PROJECT_STATUS[status];
 
@@ -697,6 +816,7 @@ export default function Home() {
         <Education />
         <Experience />
         <Skills />
+        <Services />
         <Projects />
         <Contact />
       </main>

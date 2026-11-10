@@ -13,6 +13,7 @@ const exploreLinks = [
   { label: "Education", id: "education" },
   { label: "Experience", id: "experience" },
   { label: "Skills", id: "skills" },
+  { label: "Services", id: "services" },
   { label: "Projects", id: "projects" },
   { label: "Contact", id: "contact" },
 ];
