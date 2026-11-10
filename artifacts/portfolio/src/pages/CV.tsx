@@ -149,6 +149,30 @@ const strengths = [
   "Continuous Learning",
 ];
 
+const experience = [
+  {
+    title: "Junior Software Developer",
+    company: "JTN Africa",
+    period: "October 2026 – Present",
+    type: "Full-time",
+    highlights: [
+      "Build and maintain production web applications with Node.js, Express, and PostgreSQL.",
+      "Design REST API endpoints and database schemas that keep request handling fast and predictable.",
+      "Review code, track work in Git, and collaborate with the team on delivery.",
+    ],
+  },
+  {
+    title: "Software Developer Intern",
+    company: "JTN Africa",
+    period: "June 2026 – August 2026",
+    type: "Internship",
+    highlights: [
+      "Engineered and debugged RESTful API endpoints, improving request handling and backend response times.",
+      "Collaborated with senior developers through Git and code reviews to maintain clean codebase standards.",
+    ],
+  },
+];
+
 function Card({ title, children }: { title: string; children: ReactNode }) {
   return (
     <section className="rounded-lg border border-border bg-card p-6">
@@ -386,30 +410,36 @@ export default function CV() {
                 </h2>
               </div>
 
-              <div className="rounded-lg border border-border bg-card p-6">
-                <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <h3 className="font-semibold text-foreground">
-                    Software Developer Intern
-                  </h3>
-                  <p className="font-mono text-xs text-muted-foreground">
-                    June 2026 – August 2026
-                  </p>
-                </div>
-                <p className="mt-1 text-sm font-medium text-accent">
-                  JTN Africa
-                </p>
-                <ul className="mt-4 space-y-2 text-sm leading-relaxed text-muted-foreground">
-                  <li className="flex gap-2">
-                    <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent" aria-hidden="true" />
-                    Engineered and debugged RESTful API endpoints, improving
-                    request handling and backend response times.
-                  </li>
-                  <li className="flex gap-2">
-                    <span className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent" aria-hidden="true" />
-                    Collaborated with senior developers through Git and code
-                    reviews to maintain clean codebase standards.
-                  </li>
-                </ul>
+              <div className="space-y-4">
+                {experience.map((role) => (
+                  <div
+                    key={`${role.title}-${role.period}`}
+                    className="rounded-lg border border-border bg-card p-6"
+                  >
+                    <div className="flex flex-wrap items-baseline justify-between gap-2">
+                      <h3 className="font-semibold text-foreground">
+                        {role.title}
+                      </h3>
+                      <p className="font-mono text-xs text-muted-foreground">
+                        {role.period}
+                      </p>
+                    </div>
+                    <p className="mt-1 text-sm font-medium text-accent">
+                      {role.company} · {role.type}
+                    </p>
+                    <ul className="mt-4 space-y-2 text-sm leading-relaxed text-muted-foreground">
+                      {role.highlights.map((highlight) => (
+                        <li key={highlight} className="flex gap-2">
+                          <span
+                            className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent"
+                            aria-hidden="true"
+                          />
+                          {highlight}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                ))}
               </div>
             </section>
 

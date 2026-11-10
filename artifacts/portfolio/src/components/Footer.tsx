@@ -10,6 +10,7 @@ const CV_DOWNLOAD_URL = `${import.meta.env.BASE_URL}Ogwel-Stephen-CV.pdf`;
 const exploreLinks = [
   { label: "About", href: "/#about" },
   { label: "Education", href: "/#education" },
+  { label: "Experience", href: "/#experience" },
   { label: "Skills", href: "/#skills" },
   { label: "Projects", href: "/#projects" },
   { label: "Contact", href: "/#contact" },
@@ -39,7 +40,8 @@ export function Footer() {
             </Link>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
               Full-stack developer building clean, accessible, human-centered web
-              applications. Open to new opportunities and interesting projects.
+              applications. Currently building at JTN Africa and always open to
+              interesting conversations.
             </p>
 
             <div className="mt-6 flex flex-wrap gap-3">

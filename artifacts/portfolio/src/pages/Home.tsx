@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { motion, type Variants } from "framer-motion";
-import { Github, Linkedin, Mail, ArrowRight, ExternalLink, Sun, Moon, GraduationCap, MapPin } from "lucide-react";
+import { Github, Linkedin, Mail, ArrowRight, ExternalLink, Sun, Moon, GraduationCap, MapPin, Briefcase } from "lucide-react";
 import { SiReact, SiPostgresql, SiExpress, SiNodedotjs, SiTypescript, SiJavascript, SiGit, SiHtml5 } from "react-icons/si";
 import { CertificatePreview, useCertificateImage } from "@/components/CertificatePreview";
 import { Footer } from "@/components/Footer";
@@ -49,6 +49,7 @@ const Nav = () => {
       <div className="flex items-center gap-6 text-sm font-medium">
         <a href="#about" className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">About</a>
         <a href="#education" className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Education</a>
+        <a href="#experience" className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Experience</a>
         <a href="#skills" className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Skills</a>
         <a href="#projects" className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Projects</a>
         <a href="#contact" className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Contact</a>
@@ -325,6 +326,126 @@ const Education = () => {
   );
 };
 
+const Experience = () => {
+  const roles = [
+    {
+      role: "Junior Software Developer",
+      company: "JTN Africa",
+      period: "October 2026 – Present",
+      type: "Full-time",
+      current: true,
+      description:
+        "Building and maintaining production web applications, with a focus on reliable APIs, clean data models, and maintainable front-end features.",
+      highlights: [
+        "Develop and ship full-stack features using Node.js, Express, and PostgreSQL.",
+        "Design REST API endpoints and database schemas that keep request handling fast and predictable.",
+        "Review code, track work in Git, and collaborate with the team on delivery.",
+      ],
+      stack: ["TypeScript", "Node.js", "Express", "PostgreSQL", "Git"],
+    },
+    {
+      role: "Software Developer Intern",
+      company: "JTN Africa",
+      period: "June 2026 – August 2026",
+      type: "Internship",
+      current: false,
+      description:
+        "Joined the engineering team for a three-month internship focused on backend development and API reliability.",
+      highlights: [
+        "Engineered and debugged RESTful API endpoints, improving request handling and backend response times.",
+        "Collaborated with senior developers through Git and code reviews to maintain clean codebase standards.",
+      ],
+      stack: ["JavaScript", "Node.js", "Express", "REST APIs", "Git"],
+    },
+  ];
+
+  return (
+    <section id="experience" className="min-h-[80vh] flex flex-col justify-center px-8 md:px-24 py-24">
+      <div className="max-w-5xl">
+        <div className="flex items-center gap-6 mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Experience</h2>
+          <div className="h-px bg-border flex-grow max-w-xs"></div>
+        </div>
+
+        <ol className="relative space-y-10 before:absolute before:left-5 before:top-3 before:bottom-3 before:w-px before:bg-border">
+          {roles.map((item, i) => (
+            <li key={`${item.role}-${item.period}`} className="relative pl-16">
+              <motion.span
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background text-accent shadow-sm"
+              >
+                <Briefcase className="h-5 w-5" aria-hidden="true" />
+              </motion.span>
+
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: i * 0.1 }}
+                className="rounded-lg border border-border bg-card p-6 md:p-8"
+              >
+                <div className="mb-3 flex flex-wrap items-center gap-x-4 gap-y-2">
+                  <span className="font-mono text-xs uppercase tracking-wide text-accent">
+                    {item.period}
+                  </span>
+                  <span className="inline-flex items-center rounded-full border border-border bg-background px-2.5 py-0.5 text-xs text-muted-foreground">
+                    {item.type}
+                  </span>
+                  {item.current && (
+                    <span className="inline-flex items-center gap-1.5 text-xs font-medium text-emerald-600 dark:text-emerald-400">
+                      <span className="relative flex h-1.5 w-1.5">
+                        <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                        <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-emerald-500" />
+                      </span>
+                      Current
+                    </span>
+                  )}
+                </div>
+
+                <h3 className="text-xl md:text-2xl font-semibold tracking-tight text-foreground">
+                  {item.role}
+                </h3>
+                <p className="mt-1 text-sm font-medium text-muted-foreground">
+                  {item.company}
+                </p>
+                <p className="mt-4 text-muted-foreground leading-relaxed">
+                  {item.description}
+                </p>
+
+                <ul className="mt-4 space-y-2 text-muted-foreground leading-relaxed">
+                  {item.highlights.map((highlight) => (
+                    <li key={highlight} className="flex gap-3">
+                      <span
+                        aria-hidden="true"
+                        className="mt-2 h-1 w-1 shrink-0 rounded-full bg-accent"
+                      />
+                      {highlight}
+                    </li>
+                  ))}
+                </ul>
+
+                <ul className="mt-6 flex flex-wrap gap-2">
+                  {item.stack.map((technology) => (
+                    <li
+                      key={technology}
+                      className="rounded-full border border-border bg-background px-3 py-1 font-mono text-xs text-muted-foreground"
+                    >
+                      {technology}
+                    </li>
+                  ))}
+                </ul>
+              </motion.div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </section>
+  );
+};
+
 const Skills = () => {
   const skills = [
     { name: "React", icon: SiReact, color: "#61DAFB" },
@@ -506,7 +627,7 @@ const Contact = () => {
         <p className="font-mono text-accent mb-4 tracking-tight">What's Next?</p>
         <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">Get In Touch</h2>
         <p className="text-lg text-muted-foreground mb-12 max-w-xl mx-auto leading-relaxed">
-          I'm currently looking for new opportunities. Whether you have a question, a project idea, or just want to say hi, I'll try my best to get back to you!
+          I'm currently building at JTN Africa, but always happy to connect. Whether you have a question, a project idea, or just want to say hi, I'll try my best to get back to you!
         </p>
         
         <a 
@@ -554,6 +675,7 @@ export default function Home() {
         <Hero />
         <About />
         <Education />
+        <Experience />
         <Skills />
         <Projects />
         <Contact />
