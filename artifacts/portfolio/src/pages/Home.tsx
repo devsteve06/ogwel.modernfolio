@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { motion, type Variants } from "framer-motion";
-import { Github, Linkedin, Mail, ArrowRight, ExternalLink, Sun, Moon } from "lucide-react";
+import { Github, Linkedin, Mail, ArrowRight, ExternalLink, Sun, Moon, GraduationCap, MapPin } from "lucide-react";
 import { SiReact, SiPostgresql, SiExpress, SiNodedotjs, SiTypescript, SiJavascript, SiGit, SiHtml5 } from "react-icons/si";
+import { CertificatePreview, useCertificateImage } from "@/components/CertificatePreview";
+import { Footer } from "@/components/Footer";
+import { Portrait } from "@/components/Portrait";
+import { ProjectPhoto } from "@/components/ProjectPhoto";
+import { socialHandles } from "@/lib/socials";
 
 const GITHUB_URL = "https://github.com/devsteve06";
 const LINKEDIN_URL = "https://www.linkedin.com/in/stephen-ogwel-54728027b";
@@ -43,6 +48,7 @@ const Nav = () => {
       </div>
       <div className="flex items-center gap-6 text-sm font-medium">
         <a href="#about" className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">About</a>
+        <a href="#education" className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Education</a>
         <a href="#skills" className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Skills</a>
         <a href="#projects" className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Projects</a>
         <a href="#contact" className="hidden sm:inline text-muted-foreground hover:text-foreground transition-colors">Contact</a>
@@ -54,32 +60,36 @@ const Nav = () => {
 
 const Hero = () => {
   return (
-    <section id="hero" className="min-h-screen flex flex-col justify-center px-8 md:px-24 pt-20 relative">
-      <motion.div
-        initial={{ opacity: 0, y: 40 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
-        className="max-w-4xl"
-      >
-        <h2 className="font-mono text-accent mb-6 tracking-tight">Hi, my name is</h2>
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-4 text-foreground">
-          Ogwel Stephen.
-        </h1>
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 text-muted-foreground">
-          I build full-stack experiences.
-        </h1>
-        <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-12 leading-relaxed">
-          I'm a software engineer specializing in building (and occasionally designing) exceptional digital experiences. Currently focused on building accessible, human-centered products using modern web technologies.
-        </p>
-        <div className="flex flex-wrap gap-4">
-          <a href="#projects" className="inline-flex items-center gap-2 px-6 py-3 bg-foreground text-background font-medium rounded-md hover:bg-accent hover:text-accent-foreground transition-all duration-300">
-            View My Work <ArrowRight className="w-4 h-4" />
-          </a>
-          <a href="#contact" className="inline-flex items-center gap-2 px-6 py-3 border border-border text-foreground font-medium rounded-md hover:border-foreground transition-all duration-300">
-            Get In Touch
-          </a>
-        </div>
-      </motion.div>
+    <section id="hero" className="min-h-screen flex flex-col justify-center px-8 md:px-24 pt-32 pb-16 relative">
+      <div className="mx-auto grid w-full max-w-6xl items-center gap-16 lg:grid-cols-[1.2fr_0.8fr]">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.2 }}
+          className="max-w-2xl"
+        >
+          <h2 className="font-mono text-accent mb-6 tracking-tight">Hi, my name is</h2>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-bold leading-[1.05] tracking-tight mb-4 text-foreground">
+            Ogwel Stephen.
+          </h1>
+          <h1 className="text-4xl sm:text-5xl md:text-6xl xl:text-7xl font-bold leading-[1.05] tracking-tight mb-8 text-muted-foreground">
+            I build full-stack experiences.
+          </h1>
+          <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mb-12 leading-relaxed">
+            I'm a software engineer specializing in building (and occasionally designing) exceptional digital experiences. Currently focused on building accessible, human-centered products using modern web technologies.
+          </p>
+          <div className="flex flex-wrap gap-4">
+            <a href="#projects" className="inline-flex items-center gap-2 px-6 py-3 bg-foreground text-background font-medium rounded-md hover:bg-accent hover:text-accent-foreground transition-all duration-300">
+              View My Work <ArrowRight className="w-4 h-4" />
+            </a>
+            <a href="#contact" className="inline-flex items-center gap-2 px-6 py-3 border border-foreground/50 text-foreground font-medium rounded-md hover:border-foreground transition-all duration-300">
+              Get In Touch
+            </a>
+          </div>
+        </motion.div>
+
+        <Portrait />
+      </div>
     </section>
   );
 };
@@ -110,6 +120,207 @@ const About = () => {
           </p>
         </div>
       </motion.div>
+    </section>
+  );
+};
+
+type Certification = {
+  name: string;
+  issuer: string;
+  /** Base path under `public/`, without extension, e.g. "certifications/ai-ethics". */
+  preview: string;
+  /** Optional public verification URL; takes priority over the local image. */
+  href?: string;
+};
+
+const CertificationCard = ({
+  certification,
+  index,
+}: {
+  certification: Certification;
+  index: number;
+}) => {
+  const { src, onError } = useCertificateImage(certification.preview);
+  const viewHref = certification.href || src;
+
+  const preview = (
+    <CertificatePreview
+      src={src}
+      onError={onError}
+      name={certification.name}
+      issuer={certification.issuer}
+    />
+  );
+
+  return (
+    <motion.li
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: index * 0.1 }}
+      className="flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card"
+    >
+      <div className="group/certificate relative aspect-[4/3] overflow-hidden border-b border-border bg-secondary/40">
+        {viewHref ? (
+          <a
+            href={viewHref}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`View ${certification.name} certificate (opens in a new tab)`}
+            className="block h-full w-full"
+          >
+            {preview}
+          </a>
+        ) : (
+          preview
+        )}
+      </div>
+
+      <div className="flex flex-1 flex-col p-5">
+        <h4 className="font-medium text-foreground">{certification.name}</h4>
+        <p className="mt-1 text-sm text-muted-foreground">{certification.issuer}</p>
+
+        <div className="mt-4">
+          {viewHref ? (
+            <a
+              href={viewHref}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1.5 text-sm font-medium text-accent hover:underline"
+            >
+              View certificate
+              <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
+            </a>
+          ) : (
+            <span className="text-sm text-muted-foreground">
+              Certificate file coming soon
+            </span>
+          )}
+        </div>
+      </div>
+    </motion.li>
+  );
+};
+
+const Education = () => {
+  const education = [
+    {
+      degree: "Bachelor of Science in Mathematics and Computer Science",
+      institution: "Technical University of Mombasa",
+      location: "Mombasa, Kenya",
+      period: "Expected 2027",
+      description:
+        "Building a strong foundation in mathematics, algorithms, and software engineering, with a focus on database systems, system design, and the full software development life cycle.",
+      coursework: [
+        "Data Structures & Algorithms",
+        "Database Management Systems",
+        "System Design",
+        "Computer Architecture & Organization",
+        "Software Development Life Cycle",
+      ],
+    },
+  ];
+
+  const certifications: Certification[] = [
+    {
+      name: "AI Ethics",
+      issuer: "DataCamp",
+      preview: "certifications/ai-ethics.png",
+    },
+    {
+      name: "Artificial Intelligence Training",
+      issuer: "ICTA Kenya",
+      preview: "certifications/icta-ai-training.jpg",
+    },
+  ];
+
+  return (
+    <section id="education" className="min-h-[80vh] flex flex-col justify-center px-8 md:px-24 py-24">
+      <div className="max-w-5xl">
+        <div className="flex items-center gap-6 mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Education</h2>
+          <div className="h-px bg-border flex-grow max-w-xs"></div>
+        </div>
+
+        <ol
+          className={`relative space-y-10 ${
+            education.length > 1
+              ? "before:absolute before:left-5 before:top-3 before:bottom-3 before:w-px before:bg-border"
+              : ""
+          }`}
+        >
+          {education.map((item, i) => (
+            <li key={item.degree} className="relative pl-16">
+              <motion.span
+                initial={{ opacity: 0, scale: 0.8 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-full border border-border bg-background text-accent shadow-sm"
+              >
+                <GraduationCap className="h-5 w-5" aria-hidden="true" />
+              </motion.span>
+
+              <motion.div
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1], delay: i * 0.1 }}
+                className="rounded-lg border border-border bg-card p-6 md:p-8"
+              >
+                <div className="mb-3 flex flex-wrap items-center gap-x-4 gap-y-2">
+                  <span className="font-mono text-xs uppercase tracking-wide text-accent">
+                    {item.period}
+                  </span>
+                  <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+                    <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
+                    {item.location}
+                  </span>
+                </div>
+
+                <h3 className="text-xl md:text-2xl font-semibold tracking-tight text-foreground">
+                  {item.degree}
+                </h3>
+                <p className="mt-1 text-sm font-medium text-muted-foreground">
+                  {item.institution}
+                </p>
+                <p className="mt-4 text-muted-foreground leading-relaxed">
+                  {item.description}
+                </p>
+
+                <div className="mt-6">
+                  <p className="mb-3 font-mono text-xs uppercase tracking-wide text-muted-foreground">
+                    Relevant coursework
+                  </p>
+                  <ul className="flex flex-wrap gap-2">
+                    {item.coursework.map((course) => (
+                      <li
+                        key={course}
+                        className="rounded-full border border-border bg-background px-3 py-1 text-xs text-muted-foreground"
+                      >
+                        {course}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </motion.div>
+            </li>
+          ))}
+        </ol>
+
+        <div className="mt-14">
+          <div className="mb-6 flex items-center gap-4">
+            <h3 className="text-lg font-semibold tracking-tight text-foreground">Certifications</h3>
+            <div className="h-px flex-grow bg-border"></div>
+          </div>
+
+          <ul className="grid items-stretch gap-6 sm:grid-cols-2">
+            {certifications.map((cert, i) => (
+              <CertificationCard key={cert.name} certification={cert} index={i} />
+            ))}
+          </ul>
+        </div>
+      </div>
     </section>
   );
 };
@@ -160,7 +371,7 @@ const Skills = () => {
               variants={item}
               className="flex items-center gap-4 p-4 border border-border rounded-lg bg-background/50 hover:bg-background hover:border-accent transition-colors group"
             >
-              <skill.icon className="w-8 h-8 opacity-70 group-hover:opacity-100 transition-opacity" style={{ color: skill.color !== "currentColor" ? skill.color : undefined }} />
+              <skill.icon className="w-8 h-8 opacity-70 group-hover:opacity-100 transition-opacity" style={{ color: skill.color !== "currentColor" ? skill.color : undefined }} aria-hidden="true" />
               <span className="font-medium">{skill.name}</span>
             </motion.div>
           ))}
@@ -170,19 +381,50 @@ const Skills = () => {
   );
 };
 
+type ProjectStatus = "live" | "completed" | "in-progress" | "archived";
+
+const PROJECT_STATUS: Record<ProjectStatus, { label: string; dot: string }> = {
+  live: { label: "Live", dot: "bg-emerald-500" },
+  completed: { label: "Completed", dot: "bg-sky-500" },
+  "in-progress": { label: "In Progress", dot: "bg-amber-500" },
+  archived: { label: "Archived", dot: "bg-zinc-400" },
+};
+
+const ProjectStatusBadge = ({ status }: { status: ProjectStatus }) => {
+  const meta = PROJECT_STATUS[status];
+
+  return (
+    <span className="absolute left-4 top-4 z-20 inline-flex items-center gap-2 rounded-full border border-border bg-background/90 px-3 py-1 font-mono text-xs uppercase tracking-wide text-foreground shadow-sm backdrop-blur-sm">
+      <span className={`h-1.5 w-1.5 rounded-full ${meta.dot}`} aria-hidden="true" />
+      {meta.label}
+    </span>
+  );
+};
+
 const Projects = () => {
-  const projects = [
+  const projects: Array<{
+    title: string;
+    description: string;
+    tech: string[];
+    image: string;
+    status: ProjectStatus;
+    links: { github: string; live: string };
+  }> = [
     {
       title: "StudentConnect",
       description: "A comprehensive attachment and internship platform designed to bridge the gap between students and industry opportunities. Features robust user roles, application tracking, and an intuitive dashboard for both students and employers.",
       tech: ["React", "Node.js", "Express", "PostgreSQL", "TypeScript"],
-      links: { github: "#", live: "#" }
+      image: "projects/studentconnect",
+      status: "completed",
+      links: { github: "#", live: "https://student-connect-wine.vercel.app/" }
     },
     {
       title: "Kaida",
       description: "A modern e-commerce platform built for scale. Includes a full shopping cart experience, secure checkout integration, product inventory management, and a responsive, performance-optimized storefront.",
       tech: ["React", "Express", "PostgreSQL", "Tailwind CSS"],
-      links: { github: "#", live: "#" }
+      image: "projects/kaida",
+      status: "in-progress",
+      links: { github: "#", live: "https://kaida-emart.vercel.app/" }
     }
   ];
 
@@ -204,11 +446,21 @@ const Projects = () => {
               transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               className={`flex flex-col ${i % 2 !== 0 ? 'md:flex-row-reverse' : 'md:flex-row'} gap-8 items-center group`}
             >
-              <div className="w-full md:w-1/2 aspect-video bg-muted rounded-lg overflow-hidden border border-border relative flex items-center justify-center">
+              <a
+                href={project.links.live}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`View ${project.title} live`}
+                className="w-full md:w-1/2 aspect-video bg-muted rounded-lg overflow-hidden border border-border relative flex items-center justify-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-background"
+              >
                 <div className="absolute inset-0 bg-accent/5 mix-blend-multiply group-hover:bg-transparent transition-colors duration-500 z-10"></div>
-                {/* Minimal placeholder for project image */}
-                <div className="text-muted-foreground/30 font-mono text-xl">{project.title.toLowerCase()}.web</div>
-              </div>
+                <ProjectPhoto
+                  baseName={project.image}
+                  alt={`${project.title} project screenshot`}
+                  title={project.title}
+                />
+                <ProjectStatusBadge status={project.status} />
+              </a>
               
               <div className={`w-full md:w-1/2 flex flex-col ${i % 2 !== 0 ? 'md:items-start md:text-left' : 'md:items-end md:text-right'}`}>
                 <p className="font-mono text-accent text-sm mb-2 tracking-tight">Featured Project</p>
@@ -228,7 +480,7 @@ const Projects = () => {
                   <a href={project.links.github} className="text-muted-foreground hover:text-accent transition-colors" aria-label="GitHub Repository">
                     <Github className="w-5 h-5" />
                   </a>
-                  <a href={project.links.live} className="text-muted-foreground hover:text-accent transition-colors" aria-label="Live Demo">
+                  <a href={project.links.live} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-accent transition-colors" aria-label={`View ${project.title} live`}>
                     <ExternalLink className="w-5 h-5" />
                   </a>
                 </div>
@@ -272,18 +524,26 @@ const Contact = () => {
             <Linkedin className="w-6 h-6" />
           </a>
         </div>
+
+        <ul className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          {socialHandles.map(({ label, handle, href, icon: Icon }) => (
+            <li key={label}>
+              <a
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`${label} — ${handle}`}
+                className="inline-flex items-center gap-2 rounded-full border border-border px-3.5 py-2 text-sm text-muted-foreground transition-colors hover:border-accent hover:text-foreground"
+              >
+                <Icon className="h-4 w-4 text-accent" aria-hidden="true" />
+                <span className="text-xs font-medium">{label}</span>
+                <span className="font-mono text-xs">{handle}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
       </motion.div>
     </section>
-  );
-};
-
-const Footer = () => {
-  return (
-    <footer className="py-8 text-center border-t border-border mt-auto">
-      <p className="font-mono text-xs text-muted-foreground">
-        Designed & Built by Ogwel Stephen
-      </p>
-    </footer>
   );
 };
 
@@ -294,6 +554,7 @@ export default function Home() {
       <main>
         <Hero />
         <About />
+        <Education />
         <Skills />
         <Projects />
         <Contact />

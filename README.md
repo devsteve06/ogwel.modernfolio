@@ -38,6 +38,14 @@ that override the dev server port and the app's base path.
 
 - `artifacts/portfolio/` — the portfolio app
   - `src/pages/Home.tsx` — main page (hero, skills, projects)
+  - `src/pages/CV.tsx` — web version of the CV at `/cv`
+  - `src/components/Footer.tsx` — shared footer with **View CV** and **Download CV** actions
+  - `src/lib/socials.ts` — social handles (`@devsteve06` on Instagram, X, TikTok) used by the contact section and footer
+  - `public/Ogwel-Stephen-CV.pdf` — downloadable CV document
+  - `src/components/Portrait.tsx` — profile photo frame used in the hero
+  - `public/profile.jpg` — **your personal photo** (also accepts `.jpeg`, `.png`, `.webp`; the hero shows a placeholder until it exists)
+  - `public/projects/studentconnect.jpg` / `public/projects/kaida.jpg` — **project screenshots** (same supported extensions; a 16:9 screenshot works best)
+  - `public/certifications/ai-ethics.png` / `public/certifications/icta-ai-training.jpg` — **certificate previews** (same supported extensions; each card links to the image in a new tab, and a placeholder shows until the file exists)
   - `src/components/ui/` — shadcn/ui components
   - `src/index.css` — Tailwind theme and global styles
   - `vite.config.ts` — build/dev config
